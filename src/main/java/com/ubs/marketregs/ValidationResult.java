@@ -8,10 +8,13 @@ package com.ubs.marketregs;
  * @param resultCode
  */
 public record ValidationResult(boolean validationSucceeded, String message, ValidationResultCode resultCode) {
-    public static final String INVALID_CARD_NUMBER_MUST_BE_NUMERIC = "Invalid: card number must be numeric";
+    static final String INVALID_CARD_NUMBER_MUST_BE_NUMERIC = "Invalid: card number must be numeric";
 
-    public static final String INVALID_CARD_NUMBER_FAILED = "Invalid: card number failed validation";
-    public static final String VALID = "Valid";
+    static final String INVALID_CARD_NUMBER_FAILED = "Invalid: card number failed validation";
 
-    public enum ValidationResultCode {VALID,INVALID_FORMAT, NUMBER_FAILED_VALIDATION}
+    static final String INVALID_CARD_NUMBER_EMPTY = "Invalid: card number cannot be null, empty or blank";
+
+    static final String VALID = "Valid";
+
+    public enum ValidationResultCode {VALID,INVALID_FORMAT, NUMBER_FAILED_VALIDATION, NUMBER_EMPTY}
 }

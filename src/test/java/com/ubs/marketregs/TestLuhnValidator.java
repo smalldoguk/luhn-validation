@@ -70,6 +70,22 @@ public class TestLuhnValidator {
     }
 
     @Test
+    public void testNullOrEmpty() {
+        ValidationResult result = LuhnValidator.validate(null);
+        assertFalse(result.validationSucceeded());
+        assertEquals(ValidationResult.ValidationResultCode.NUMBER_EMPTY, result.resultCode());
+        assertEquals("Invalid: card number cannot be null, empty or blank", result.message());
+        result = LuhnValidator.validate("");
+        assertFalse(result.validationSucceeded());
+        assertEquals(ValidationResult.ValidationResultCode.NUMBER_EMPTY, result.resultCode());
+        assertEquals("Invalid: card number cannot be null, empty or blank", result.message());
+        result = LuhnValidator.validate("   ");
+        assertFalse(result.validationSucceeded());
+        assertEquals(ValidationResult.ValidationResultCode.NUMBER_EMPTY, result.resultCode());
+        assertEquals("Invalid: card number cannot be null, empty or blank", result.message());
+    }
+
+    @Test
     public void testInvalidASCIICharacter() {
         ValidationResult result = LuhnValidator.validate("A4B992C73D98E716F");
         assertFalse(result.validationSucceeded());

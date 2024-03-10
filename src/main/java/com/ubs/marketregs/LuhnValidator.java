@@ -6,10 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.ubs.marketregs.ValidationResult.INVALID_CARD_NUMBER_FAILED;
-import static com.ubs.marketregs.ValidationResult.INVALID_CARD_NUMBER_MUST_BE_NUMERIC;
-import static com.ubs.marketregs.ValidationResult.ValidationResultCode.INVALID_FORMAT;
-import static com.ubs.marketregs.ValidationResult.ValidationResultCode.NUMBER_FAILED_VALIDATION;
+import static com.ubs.marketregs.ValidationResult.*;
+import static com.ubs.marketregs.ValidationResult.ValidationResultCode.*;
 
 /**
  * Simple class to validate a card number using the Luhn algorithm - starting from the right-most digit (the check digit)
@@ -42,6 +40,13 @@ public class LuhnValidator {
      */
     public static ValidationResult validate(String cardNumber) {
         log.debug("Validating {}", cardNumber);
+
+        // make sure there's actually a card number
+        if (cardNumber == null || cardNumber.isBlank()) {
+            log.debug("{} failed validation - no card number specified", cardNumber);
+            return new ValidationResult(false, INVALID_CARD_NUMBER_EMPTY, NUMBER_EMPTY);
+        }
+
         // remove permitted separators
         cardNumber = cardNumber.trim().replaceAll(SEPARATORS_REGEX, "");
 
